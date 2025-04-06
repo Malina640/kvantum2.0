@@ -80,23 +80,18 @@ async def q5(message: types.Message, state: FSMContext):
     today = datetime.now().strftime("%Y-%m-%d")
     cursor.execute("INSERT INTO answers VALUES (?, ?, ?, ?, ?, ?, ?)", (user_id, today, q1, q2, q3, q4, q5))
     conn.commit()
-    await message.answer(
-        f"🎯 Вот твой день:
-"
-        f"1. {q1}
-2. {q2}
-3. {q3}
-4. {q4}
-5. {q5}
-
-"
-        f"🥇 Успешный успех: {q1}
-🥴 Жмых: {q3}
-
-"
+full_message = (
+        f"🎯 Вот твой день:\n"
+        f"1. {q1}\n"
+        f"2. {q2}\n"
+        f"3. {q3}\n"
+        f"4. {q4}\n"
+        f"5. {q5}\n\n"
+        f"🥇 Успешный успех: {q1}\n"
+        f"🥴 Жмых: {q3}\n\n"
         f"💡 Совет на завтра: продолжай делать то, что приближает тебя к деньгам."
     )
-    await state.finish()
+    await message.answer(full_message)
 
 @dp.message_handler(commands=['settime'])
 async def set_time(message: types.Message):
